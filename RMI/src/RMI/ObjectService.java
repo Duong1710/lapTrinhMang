@@ -23,11 +23,11 @@ thông tin giá trị khuyến mãi
 4.	Kết thúc chương trình
  */
 package RMI;
+import java.rmi.*;
+import java.util.*;
+import java.io.*;
+public interface ObjectService extends Remote {
+        public Serializable requestObject(String studentCode, String qAlias) throws RemoteException;
 
-/**
- *
- * @author Admin
- */
-public interface ObjectService {
-    
-}
+        public void submitObject(String studentCode, String qAlias, Serializable object) throws RemoteException;
+    }

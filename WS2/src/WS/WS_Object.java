@@ -15,10 +15,22 @@ d. Kết thúc chương trình client.
  */
 package WS;
 
-/**
- *
- * @author Admin
- */
+import java.util.*;
+import vn.medianews.*;
 public class WS_Object {
-    
+   
+    public static void main(String[] args) throws Exception {
+        ObjectService_Service service = new ObjectService_Service();
+        ObjectService port = service.getObjectServicePort();
+        String ma = "B22DCCN169";
+        String qCode = "J6BxDJvr";
+        List<Student> a = port.requestListStudent(ma, qCode);
+        List<Student> b = new ArrayList<>();
+        for(Student x : a){
+            if(x.getScore() >= 8.0 || x.getScore() <= 5.0){
+                b.add(x);
+            }
+        }
+        port.submitListStudent(ma, qCode, b);
+    }
 }
