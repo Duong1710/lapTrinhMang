@@ -14,41 +14,50 @@ d. Kết thúc chương trình client.
  */
 package WS;
 
-
-
 import vn.medianews.*;
 import java.util.*;
 
 public class WS_Character_Service {
-    public static void main(String[] args)throws Exception {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
         CharacterService_Service service = new CharacterService_Service();
         CharacterService port = service.getCharacterServicePort();
-        String ma = "B22DCCN169"; String qCode = "PZ9nDU1m";
-        List<String> b = port.requestStringArray(ma, qCode);
-         List<String> a = new ArrayList<>();
-        for(String x : b){
-            System.out.println(x);
-            a.add(x);
+
+        String studentCode = "B22DCCN169";
+        String qCode = "PZ9nDU1m";
+
+        List<String> requestStringArray = port.requestStringArray(studentCode, qCode);
+
+        Map<Integer, List<String>> groups = new HashMap<>();
+        // Tạo các nhóm
+        for (String word : requestStringArray) {
+            int vowelCount = countVowels(word);
+            groups.computeIfAbsent(vowelCount, k -> new ArrayList<>()).add(word);
         }
-       
-        
-        Collections.sort(a);
-        Collections.sort(a, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return dem(o1)-dem(o2);
-            }
-        });
-        port.submitCharacterStringArray(ma, qCode,a );
-        System.out.println(a);
+
+        List<String> result = new ArrayList<>();
+        for (List<String> groupWords : groups.values()) {
+            Collections.sort(groupWords);
+            String joined = String.join(", ", groupWords);
+            result.add(joined);
+        }
+
+        port.submitCharacterStringArray(studentCode, qCode, result);
+
     }
-    public static int dem(String s){
+
+    // Đếm số nguyên âm trong từ
+    private static int countVowels(String word) {
+        int count = 0;
         String ngAm = "ueoaiUEOAI";
-        int dem = 0;
-        for(int i = 0; i < s.length(); i++){
-            if(ngAm.indexOf(s.charAt(i)) != -1) dem++;
+        for (char c : word.toCharArray()) {
+            if (ngAm.indexOf(c) != -1) {
+                count++;
+            }
         }
-        return dem;
+        return count;
     }
 }
-
