@@ -14,6 +14,7 @@ public class Test {
         int y = 72;
         char kyTu2 = (char) y;
         System.out.println(kyTu2);
+        // hi
     }
     
 }
