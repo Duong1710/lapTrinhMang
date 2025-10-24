@@ -37,17 +37,24 @@ public class RMI_Byte_Service {
         bs.submitData(ma, qCode, res.getBytes());
         
     }
-    public static String solve(String s){
-        int len = s.length();
-        String res = "";
-        for(int i=0;i<len;i++){
-            int n = s.charAt(i);
-            String a = Integer.toHexString(n);
-            System.out.println(a);
-            res+= Integer.toHexString(n);
+//    public static String solve(String s){
+//        int len = s.length();
+//        String res = "";
+//        for(int i=0;i<len;i++){
+//            int n = s.charAt(i);
+//            String a = Integer.toHexString(n);
+//            System.out.println(a);
+//            res+= Integer.toHexString(n);
+//        }
+//        System.out.println(res);
+//        return res;
+//    }
+        public static String solve(String s){
+            String res = "";
+            for(char x : s.toCharArray()){
+                int n = x;
+                res += Integer.toHexString(n);
+            }
+            return res;
         }
-        System.out.println(res);
-        return res;
-    }
-        
 }
